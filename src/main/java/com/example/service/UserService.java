@@ -44,7 +44,7 @@ public class UserService {
         UserCreated userAdded = new UserCreated();
 
         if (userRepository.existsById(user.getId())) {
-            userAdded.setError("User already Exists");
+            userAdded.setError("User already exists");
             userAdded.setStatusCode(403);
             return userAdded;
         } else {
