@@ -24,10 +24,7 @@ public class SocialPostService {
     }
 
     public List<SocialPost> getSocialPostByUserId(Long userId) {
-        return socialPostRepository.findAll()
-                .stream()
-                .filter(post -> post.getUserId().equals(userId))
-                .toList();
+        return  socialPostRepository.getSocialPostByUserId(userId);
     }
 
     public SocialPost addSocialPost(SocialPost socialPost) {
