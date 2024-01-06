@@ -4,6 +4,7 @@ import lombok.*;
 import jakarta.persistence.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,4 +23,6 @@ public class User {
     private String password;
     @NotNull(message = "Email should not be null!")
     private String email;
+
+
 }

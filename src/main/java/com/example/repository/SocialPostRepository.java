@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface SocialPostRepository extends JpaRepository<SocialPost, Long> {
-    List<SocialPost> getSocialPostByUserId(Long userId);
+    List<SocialPost> findByUserId(Long userId);
+
 }

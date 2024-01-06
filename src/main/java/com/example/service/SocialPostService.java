@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class SocialPostService {
@@ -21,10 +20,6 @@ public class SocialPostService {
 
     public Optional<SocialPost> getSocialPostById(Long postId) {
         return socialPostRepository.findById(postId);
-    }
-
-    public List<SocialPost> getSocialPostByUserId(Long userId) {
-        return  socialPostRepository.getSocialPostByUserId(userId);
     }
 
     public SocialPost addSocialPost(SocialPost socialPost) {
@@ -48,5 +43,8 @@ public class SocialPostService {
 
     public void deleteSocialPost(Long postId) {
         socialPostRepository.deleteById(postId);
+    }
+    public List<SocialPost> getSocialPostsByUserId(Long userId) {
+        return socialPostRepository.findByUserId(userId);
     }
 }

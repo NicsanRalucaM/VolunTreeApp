@@ -1,7 +1,9 @@
 package com.example.controller;
 
 import com.example.entity.SocialPost;
+import com.example.entity.User;
 import com.example.service.SocialPostService;
+import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ public class SocialPostController {
 
     @Autowired
     private SocialPostService socialPostService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<List<SocialPost>> getAllSocialPosts() {
@@ -28,12 +32,6 @@ public class SocialPostController {
         Optional<SocialPost> socialPost = socialPostService.getSocialPostById(postId);
         return socialPost.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @GetMapping("/users/{userId}")
-    public ResponseEntity<List<SocialPost>> getSocialPostsByUserId(@PathVariable Long userId) {
-        List<SocialPost> socialPosts = socialPostService.getSocialPostByUserId(userId);
-        return new ResponseEntity<>(socialPosts, HttpStatus.OK);
     }
 
     @PostMapping
@@ -54,4 +52,17 @@ public class SocialPostController {
         socialPostService.deleteSocialPost(postId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<List<SocialPost>> getSocialPostsByUserId(@PathVariable Long userId) {
+        Optional<User> userOptional = userService.getUserById(userId);
+
+        if (userOptional.isPresent()) {
+            List<SocialPost> socialPosts = socialPostService.getSocialPostsByUserId(userId);
+            return new ResponseEntity<>(socialPosts, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
