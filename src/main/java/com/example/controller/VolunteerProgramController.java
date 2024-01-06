@@ -30,6 +30,12 @@ public class VolunteerProgramController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/organizations/{organizationId}")
+    public ResponseEntity<List<VolunteerProgram>> getVolunteerProgramByOrganizationId(@PathVariable Long organizationId) {
+        List<VolunteerProgram> volunteerPrograms = volunteerProgramService.getVolunteerProgramByOrganizationId(organizationId);
+        return new ResponseEntity<>(volunteerPrograms, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<VolunteerProgram> addVolunteerProgram(@RequestBody VolunteerProgram volunteerProgram) {
         VolunteerProgram newVolunteerProgram = volunteerProgramService.addVolunteerProgram(volunteerProgram);
