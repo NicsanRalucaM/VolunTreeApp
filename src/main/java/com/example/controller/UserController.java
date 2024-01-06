@@ -3,7 +3,6 @@ package com.example.controller;
 import com.example.entity.User;
 import com.example.model.AllUsers;
 import com.example.model.SingleUser;
-import com.example.model.UserCreated;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +33,8 @@ public class UserController {
     }
 
     @PostMapping
-    public UserCreated createUser(@RequestBody User user) {
-        UserCreated result = userService.createUser(user);
+    public SingleUser createUser(@RequestBody User user) {
+        SingleUser result = userService.createUser(user);
         return result;
     }
 

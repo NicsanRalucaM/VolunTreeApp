@@ -3,7 +3,6 @@ package com.example.service;
 import com.example.entity.User;
 import com.example.model.AllUsers;
 import com.example.model.SingleUser;
-import com.example.model.UserCreated;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +39,8 @@ public class UserService {
         return user;
     }
 
-    public UserCreated createUser(User user) {
-        UserCreated userAdded = new UserCreated();
+    public SingleUser createUser(User user) {
+        SingleUser userAdded = new SingleUser();
 
         if (userRepository.existsById(user.getId())) {
             userAdded.setError("User already exists");
