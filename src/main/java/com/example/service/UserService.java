@@ -1,61 +1,48 @@
 package com.example.service;
 
 import com.example.entity.User;
-import com.example.model.AllUsers;
-import com.example.model.SingleUser;
+
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private UserRepository userRepository;
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
-    public AllUsers getAllUsers() {
-        List<User> users = userRepository.findAll();
-
-        if (users.isEmpty()) {
-            return new AllUsers(new ArrayList<>(), "No users found", 204);
-        }
-        return new AllUsers(users, "Users found", 200);
+    public Optional<User> getUserById(Long userId) {
+        return userRepository.findById(userId);
     }
 
-
-    public SingleUser getUserById(long id) {
-        var result = userRepository.findById(id);
-
-        if (result.isEmpty()) {
-            return new SingleUser(null, "User not found", 404);
-        }
-        SingleUser user = new SingleUser(result.get(), "", 200);
-        return user;
+    public User addUser(User user) {
+        return userRepository.save(user);
     }
 
-    public SingleUser createUser(User user) {
-        SingleUser userAdded = new SingleUser();
-
-        if (userRepository.existsById(user.getId())) {
-            userAdded.setError("User already exists");
-            userAdded.setStatusCode(403);
-            return userAdded;
+    public Optional<User> updateUser(Long userId, User updatedUser) {
+        Optional<User> existingUserOptional = userRepository.findById(userId);
+        if (existingUserOptional.isPresent()) {
+            User existingUser = existingUserOptional.get();
+            existingUser.setName(updatedUser.getName());
+            existingUser.setEmail(updatedUser.getEmail());
+            existingUser.setPassword(updatedUser.getPassword());
+            User savedUser = userRepository.save(existingUser);
+            return Optional.of(savedUser);
         } else {
-            userRepository.save(user);
-            userAdded.setUser(user);
-            userAdded.setStatusCode(200);
-            return userAdded;
+            return Optional.empty();
         }
     }
 
-    public void deleteUserById(long id) {
-        userRepository.deleteById(id);
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
     }
-
 }
