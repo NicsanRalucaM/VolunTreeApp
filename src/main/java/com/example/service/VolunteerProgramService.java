@@ -22,6 +22,10 @@ public class VolunteerProgramService {
         return volunteerProgramRepository.findById(programId);
     }
 
+    public List<VolunteerProgram> getVolunteerProgramByOrganizationId(Long organizationId){
+        return volunteerProgramRepository.findByOrganizationId(organizationId);
+    }
+
     public VolunteerProgram addVolunteerProgram(VolunteerProgram volunteerProgram) {
         return volunteerProgramRepository.save(volunteerProgram);
     }
