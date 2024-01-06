@@ -30,6 +30,12 @@ public class SocialPostController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<List<SocialPost>> getSocialPostsByUserId(@PathVariable Long userId) {
+        List<SocialPost> socialPosts = socialPostService.getSocialPostByUserId(userId);
+        return new ResponseEntity<>(socialPosts, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<SocialPost> addSocialPost(@RequestBody SocialPost socialPost) {
         SocialPost newSocialPost = socialPostService.addSocialPost(socialPost);
