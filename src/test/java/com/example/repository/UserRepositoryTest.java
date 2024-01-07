@@ -1,6 +1,7 @@
 package com.example.repository;
 
 import com.example.entity.User;
+import com.example.enums.Role;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -18,7 +19,7 @@ class UserRepositoryTest {
 
     @Test
     void testSaveUser() {
-        User user = new User(null, "Alex Popescu", "password123", "alex@example.com");
+        User user = new User(null, "Alex Popescu", "password123", "alex@example.com", Role.NO_ORG);
         User savedUser = userRepository.save(user);
         assertNotNull(savedUser.getId());
         Optional<User> retrievedUser = userRepository.findById(savedUser.getId());
@@ -30,7 +31,7 @@ class UserRepositoryTest {
 
     @Test
     void testFindByEmail() {
-        User user = new User(null, "Alex Ionescu", "password456", "alexionescu@example.com");
+        User user = new User(null, "Alex Ionescu", "password456", "alexionescu@example.com", Role.NO_ORG);
         userRepository.save(user);
         Optional<User> retrievedUser = userRepository.findByEmail("alexionescu@example.com");
         assertTrue(retrievedUser.isPresent());
@@ -40,8 +41,8 @@ class UserRepositoryTest {
 
     @Test
     void testFindAll() {
-        User user1 = new User(null, "user1 test", "password123", "user1@example.com");
-        User user2 = new User(null, "user2 test", "password101", "user2@example.com");
+        User user1 = new User(null, "user1 test", "password123", "user1@example.com", Role.NO_ORG);
+        User user2 = new User(null, "user2 test", "password101", "user2@example.com", Role.NO_ORG);
         userRepository.saveAll(List.of(user1, user2));
 
         List<User> allUsers = userRepository.findAll();
@@ -51,7 +52,7 @@ class UserRepositoryTest {
 
     @Test
     void testDeleteUser() {
-        User user = new User(null, "Delete Me", "delete123", "delete@example.com");
+        User user = new User(null, "Delete Me", "delete123", "delete@example.com", Role.NO_ORG);
         userRepository.save(user);
 
         userRepository.delete(user);
