@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +34,7 @@ class SocialPostControllerTest {
     private UserService userService;
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getAllSocialPosts() {
         List<SocialPost> mockSocialPosts = Arrays.asList(new SocialPost(), new SocialPost());
         when(socialPostService.getAllSocialPosts()).thenReturn(mockSocialPosts);
@@ -43,6 +45,7 @@ class SocialPostControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getSocialPostById_ExistingPost() {
         Long postId = 1L;
         SocialPost mockSocialPost = new SocialPost();
@@ -54,6 +57,7 @@ class SocialPostControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getSocialPostById_NonexistentPost() {
         Long postId = 1L;
         when(socialPostService.getSocialPostById(postId)).thenReturn(Optional.empty());
@@ -62,6 +66,7 @@ class SocialPostControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void addSocialPost() {
         SocialPost inputSocialPost = new SocialPost();
         SocialPost mockSavedSocialPost = new SocialPost();
@@ -72,6 +77,7 @@ class SocialPostControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void updateSocialPost_ExistingPost() {
         Long postId = 1L;
         SocialPost updatedSocialPost = new SocialPost();
@@ -83,6 +89,7 @@ class SocialPostControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void updateSocialPost_NonexistentPost() {
         Long postId = 1L;
         SocialPost updatedSocialPost = new SocialPost();
@@ -92,6 +99,7 @@ class SocialPostControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void deleteSocialPost() {
         Long postId = 1L;
 
@@ -102,6 +110,7 @@ class SocialPostControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getSocialPostsByUserId_ExistingUser() {
         Long userId = 1L;
         User mockUser = new User();
@@ -117,6 +126,7 @@ class SocialPostControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getSocialPostsByUserId_NonexistentUser() {
         Long userId = 1L;
         when(userService.getUserById(userId)).thenReturn(Optional.empty());

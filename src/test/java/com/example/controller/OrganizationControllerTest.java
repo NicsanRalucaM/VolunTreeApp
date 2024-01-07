@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,6 +38,7 @@ class OrganizationControllerTest {
     private UserOrganizationService userOrganizationService;
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getAllOrganizations() {
         List<Organization> mockOrganizations = Arrays.asList(new Organization(), new Organization());
         when(organizationService.getAllOrganizations()).thenReturn(mockOrganizations);
@@ -47,6 +49,7 @@ class OrganizationControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getOrganizationById_ExistingOrganization() {
         Long organizationId = 1L;
         Organization mockOrganization = new Organization();
@@ -59,6 +62,7 @@ class OrganizationControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getOrganizationById_NonexistentOrganization() {
         Long organizationId = 1L;
         when(organizationService.getOrganizationById(organizationId)).thenReturn(Optional.empty());
@@ -69,6 +73,7 @@ class OrganizationControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getOrganizationByName_ExistingOrganization() {
         String organizationName = "TestOrganization";
         Organization mockOrganization = new Organization();
@@ -81,6 +86,7 @@ class OrganizationControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getOrganizationByName_NonexistentOrganization() {
         String organizationName = "NonexistentOrganization";
         when(organizationService.getOrganizationByName(organizationName)).thenReturn(Optional.empty());
@@ -91,6 +97,7 @@ class OrganizationControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void addOrganization_ValidRequest() {
         Organization inputOrganization = new Organization();
         Long userId = 1L;
@@ -108,6 +115,7 @@ class OrganizationControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void addOrganization_InvalidUser() {
         Organization inputOrganization = new Organization();
         Long userId = 1L;
@@ -119,6 +127,7 @@ class OrganizationControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void addOrganization_UserInOrganization() {
         Organization inputOrganization = new Organization();
         Long userId = 1L;
@@ -132,6 +141,7 @@ class OrganizationControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void updateOrganization_ExistingOrganization() {
         Long organizationId = 1L;
         Organization updatedOrganization = new Organization();
@@ -145,6 +155,7 @@ class OrganizationControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void updateOrganization_NonexistentOrganization() {
         Long organizationId = 1L;
         Organization updatedOrganization = new Organization();
@@ -156,6 +167,7 @@ class OrganizationControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void deleteOrganization() {
         Long organizationId = 1L;
 

@@ -29,7 +29,7 @@ class OrganizationRepositoryTest {
 
     @Test
     void testFindById() {
-        Organization organization = new Organization(null, "Organization Name", "Description");
+        Organization organization = new Organization(1L, "Organization Name", "Description");
         organizationRepository.save(organization);
 
         Optional<Organization> retrievedOrganization = organizationRepository.findById(1L);

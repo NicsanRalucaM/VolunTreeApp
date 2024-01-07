@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -28,6 +29,7 @@ class VolunteerApplicantControllerTest {
     private VolunteerApplicantService volunteerApplicantService;
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getAllVolunteerApplicants() {
         VolunteerApplicant applicant = new VolunteerApplicant(1, 1, 1, LocalDateTime.now());
 
@@ -42,6 +44,7 @@ class VolunteerApplicantControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getVolunteerApplicantsById_ExistingApplicant() {
         Long applicantId = 1L;
         VolunteerApplicant mockApplicant = new VolunteerApplicant(1, 1, 1, LocalDateTime.now());
@@ -55,6 +58,7 @@ class VolunteerApplicantControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getVolunteerApplicantsById_NonexistentApplicant() {
         Long applicantId = 1L;
 
@@ -66,6 +70,7 @@ class VolunteerApplicantControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getAllVolunteerApplicantsByUserId() {
         Integer userId = 1;
         VolunteerApplicant applicant = new VolunteerApplicant(1, userId, 1, LocalDateTime.now());
@@ -81,6 +86,7 @@ class VolunteerApplicantControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getAllVolunteerApplicantsByProgramId() {
         Integer programId = 1;
         VolunteerApplicant applicant = new VolunteerApplicant(1, 1, programId, LocalDateTime.now());
@@ -96,6 +102,7 @@ class VolunteerApplicantControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void addVolunteerApplicant() {
         VolunteerApplicant applicantToAdd = new VolunteerApplicant(1, 1, 1, LocalDateTime.now());
 
@@ -108,6 +115,7 @@ class VolunteerApplicantControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void deleteVolunteerApplicant() {
         Long applicantId = 1L;
 

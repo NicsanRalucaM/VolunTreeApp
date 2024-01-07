@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.User;
+import com.example.enums.Role;
 import com.example.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,6 +39,7 @@ class UserControllerTest {
     private UserService userService;
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void testGetAllUsers() throws Exception {
         List<User> userList = new ArrayList<>();
         when(userService.getAllUsers()).thenReturn(userList);
@@ -51,9 +54,10 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void testGetUserById() throws Exception {
         Long userId = 1L;
-        User user = new User(userId, "Alex Popescu", "password123", "alex@example.com");
+        User user = new User(userId, "Alex Popescu", "password123", "alex@example.com",Role.NO_ORG);
         when(userService.getUserById(userId)).thenReturn(Optional.of(user));
         mockMvc.perform(MockMvcRequestBuilders.get("/users/{userId}", userId)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -66,6 +70,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void testGetUserById_NotFound() throws Exception {
         Long userId = 1L;
         when(userService.getUserById(userId)).thenReturn(Optional.empty());
@@ -76,8 +81,9 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void testAddUser() throws Exception {
-        User user = new User(null, "Alex Popescu", "password123", "alex@example.com");
+        User user = new User(null, "Alex Popescu", "password123", "alex@example.com",Role.NO_ORG);
         when(userService.addUser(any(User.class))).thenReturn(user);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/users")
@@ -94,10 +100,11 @@ class UserControllerTest {
 
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void testUpdateUser() throws Exception {
         Long userId = 1L;
-        User existingUser = new User(userId, "Alex Popescu", "password123", "alex@example.com");
-        User updatedUser = new User(userId, "Updated Alex Popescu", "updatedPassword", "updated@example.com");
+        User existingUser = new User(userId, "Alex Popescu", "password123", "alex@example.com", Role.NO_ORG);
+        User updatedUser = new User(userId, "Updated Alex Popescu", "updatedPassword", "updated@example.com",Role.NO_ORG);
         when(userService.updateUser(eq(userId), any(User.class))).thenReturn(Optional.of(updatedUser));
         mockMvc.perform(MockMvcRequestBuilders.put("/users/{userId}", userId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -111,6 +118,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void testUpdateUser_NotFound() throws Exception {
         Long userId = 1L;
         when(userService.updateUser(eq(userId), any(User.class))).thenReturn(Optional.empty());
@@ -122,6 +130,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void testDeleteUser() throws Exception {
         Long userId = 1L;
         mockMvc.perform(MockMvcRequestBuilders.delete("/users/{userId}", userId)

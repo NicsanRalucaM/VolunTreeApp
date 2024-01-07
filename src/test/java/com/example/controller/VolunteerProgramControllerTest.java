@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,7 @@ class VolunteerProgramControllerTest {
     private VolunteerProgramService volunteerProgramService;
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getAllVolunteerPrograms() {
         VolunteerProgram program1 = new VolunteerProgram(1L, 1L, "Program 1", "Description 1");
         VolunteerProgram program2 = new VolunteerProgram(2L, 1L, "Program 2", "Description 2");
@@ -42,6 +44,7 @@ class VolunteerProgramControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getVolunteerProgramById_ExistingProgram() {
         Long programId = 1L;
         VolunteerProgram mockProgram = new VolunteerProgram(programId, 1L, "Program 1", "Description 1");
@@ -55,6 +58,7 @@ class VolunteerProgramControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getVolunteerProgramById_NotFound() {
         Long programId = 1L;
         when(volunteerProgramService.getVolunteerProgramById(programId)).thenReturn(Optional.empty());
@@ -65,6 +69,7 @@ class VolunteerProgramControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void getVolunteerProgramByOrganizationId() {
         VolunteerProgram program1 = new VolunteerProgram(1L, 1L, "Program 1", "Description 1");
         VolunteerProgram program2 = new VolunteerProgram(2L, 1L, "Program 2", "Description 2");
@@ -78,6 +83,7 @@ class VolunteerProgramControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void addVolunteerProgram() {
         VolunteerProgram programToAdd = new VolunteerProgram(1L, 1L, "Program 1", "Description 1");
 
@@ -90,6 +96,7 @@ class VolunteerProgramControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void updateVolunteerProgram_ExistingProgram() {
         Long programId = 1L;
         VolunteerProgram updatedProgram = new VolunteerProgram(programId, 1L, "Updated Program", "Updated Description");
@@ -103,6 +110,7 @@ class VolunteerProgramControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void updateVolunteerProgram_NotFound() {
         Long programId = 1L;
         VolunteerProgram updatedProgram = new VolunteerProgram(programId, 1L, "Updated Program", "Updated Description");
@@ -115,6 +123,7 @@ class VolunteerProgramControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "test", password = "test", roles = "ADMIN")
     void deleteVolunteerProgram() {
         Long programId = 1L;
 
