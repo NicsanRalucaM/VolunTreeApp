@@ -79,16 +79,19 @@ class UserControllerTest {
     void testAddUser() throws Exception {
         User user = new User(null, "Alex Popescu", "password123", "alex@example.com");
         when(userService.addUser(any(User.class))).thenReturn(user);
+
         mockMvc.perform(MockMvcRequestBuilders.post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"name\":\"Alex Popescu\",\"password\":\"password123\",\"email\":\"alex@example.com\"}"))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.name").value("Alex Popescu"))
                 .andExpect(jsonPath("$.password").value("password123"))
-                .andExpect(jsonPath("$.email").value("alex@example.com"));
+                .andExpect(jsonPath("$.email").value("alex@example.com"))
+                .andExpect(jsonPath("$.id").doesNotExist());
+
         verify(userService, times(1)).addUser(any(User.class));
     }
+
 
     @Test
     void testUpdateUser() throws Exception {
